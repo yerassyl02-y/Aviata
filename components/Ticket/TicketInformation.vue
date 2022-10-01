@@ -19,6 +19,10 @@ export default {};
 p:not(:last-child) {
     border-bottom: 1px dashed rgba(114, 132, 228, 0.5);
 }
+p:nth-child(2) {
+    margin-left: 24px;
+    margin-right: 46px;
+}
 p:last-child {
     color: #707276;
     margin-left: 7px;

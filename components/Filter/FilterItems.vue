@@ -28,7 +28,7 @@ export default {
 
 <template>
     <div
-        class="filter-items d-flex flex-column px-3 py-3"
+        class="filter-items d-flex flex-column bg-gray radius-4"
         :style="{ marginBottom: `${margin}`, maxHeight: `${height}` }"
     >
         <h3 class="filter-items__title">{{ title }}</h3>
@@ -38,7 +38,7 @@ export default {
             :style="{ marginTop: `${items_margin}` }"
         >
             <div
-                class="d-flex align-center pointer py-2"
+                class="d-flex align-center pointer py2"
                 v-for="title in items"
                 :key="title"
             >
@@ -69,11 +69,9 @@ export default {
 <style lang="scss" scoped>
 .filter-items {
     position: relative;
-    background: white;
-    border-radius: 10px;
 
-    max-width: 240px;
     width: 100%;
+    padding: 12px;
 
     label {
         display: flex;
@@ -105,5 +103,8 @@ export default {
             fill: #7284e4;
         }
     }
+}
+.py2 {
+    padding: 8px 0;
 }
 </style>

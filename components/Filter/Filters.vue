@@ -1,5 +1,5 @@
 <script>
-import FilterItems from "./FilterItems.vue";
+import FilterItems from "@/components/Filter/FilterItems.vue";
 export default {
     components: { FilterItems },
     data() {
@@ -10,6 +10,7 @@ export default {
                 "Только возвратные",
             ],
             airlines: [],
+            loading: false,
         };
     },
     created() {
@@ -17,10 +18,17 @@ export default {
     },
     methods: {
         async getAirlines() {
-            this.airlines = Object.values(
-                (await this.$axios.get(`/airlines/`)).data
-            );
-            this.airlines.unshift("Все");
+            try {
+                this.loading = true;
+                this.airlines = Object.values(
+                    (await this.$axios.get(`/airlines/`)).data
+                );
+                this.airlines.unshift("Все");
+            } catch (e) {
+                console.error(e);
+            } finally {
+                this.loading = false;
+            }
         },
     },
 };
@@ -44,9 +52,21 @@ export default {
         <p class="blue-text underline pointer fs12 mb-0">
             Сбросить все фильтры
         </p>
+        <v-overlay :value="loading" z-index="999999">
+            <v-progress-circular
+                :size="70"
+                :width="7"
+                color="#202123"
+                indeterminate
+            ></v-progress-circular>
+        </v-overlay>
     </div>
 </template>
 
 
 <style lang="scss" scoped>
+.filter-list {
+    max-width: 240px;
+    width: 100%;
+}
 </style>

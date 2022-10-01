@@ -4,9 +4,9 @@ export default {};
 
 
 <template>
-    <v-app class="main">
+    <main class="main">
         <Nuxt />
-    </v-app>
+    </main>
 </template>
 
 <style lang="scss" scoped>

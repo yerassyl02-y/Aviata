@@ -1,8 +1,8 @@
 <script>
-import Filters from "../components/Filters.vue";
-import TicketInformation from "../components/TicketInformation.vue";
+import Filters from "../components/Filter/Filters.vue";
+import Ticket from "../components/Ticket/Ticket.vue";
 export default {
-    components: { Filters, TicketInformation },
+    components: { Filters, Ticket },
     data() {
         return {
             data: [],
@@ -14,7 +14,7 @@ export default {
 <template>
     <div class="tickets">
         <filters />
-        <ticket-information />
+        <ticket />
     </div>
 </template>
 
@@ -24,5 +24,8 @@ export default {
     max-width: 1140px;
     margin: 0 auto;
     width: 100%;
+
+    display: flex;
+    padding: 0 16px;
 }
 </style>

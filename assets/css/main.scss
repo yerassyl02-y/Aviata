@@ -8,6 +8,10 @@ body {
         overflow-y: hidden;
 }
 
+.w-full {
+        width: 100%;
+}
+
 .fs12 {
         font-size: 12px;
         line-height: 16px;
@@ -53,9 +57,11 @@ body {
         }
 }
 
-p {
+p,
+span {
         font-family: "OpenSans-Regular";
         margin-bottom: 0 !important;
+        font-weight: normal;
 }
 
 h1,
@@ -64,6 +70,97 @@ h3 {
         font-family: "OpenSans-Bold";
 }
 
+h4,
+h5,
+h6 {
+        font-family: "OpenSans-Semibold";
+}
+
+h4 {
+        font-size: 24px;
+        line-height: 33px;
+}
+
+h5 {
+        font-size: 24px;
+        line-height: 28px;
+}
+
+.text-center {
+        text-align: center;
+}
+
+.bg-white {
+        background: white;
+}
+
+.raius-4 {
+        border-radius: 4px;
+}
+
+.bg-gray {
+        background: #F5F5F5;
+}
+
+.orange-text {
+        color: #ff9900;
+}
+
+.red-text {
+        color: rgba(255, 55, 36, 0.8);
+}
+
 .blue-text {
         color: #7284E4;
+}
+
+.d-flex {
+        display: flex;
+}
+
+.align-center {
+        align-items: center;
+}
+
+.justify-center {
+        justify-content: center;
+}
+
+.flex-column {
+        flex-direction: column;
+}
+
+#loading-bar-spinner.spinner {
+        left: 50%;
+        margin-left: -20px;
+        top: 50%;
+        margin-top: -20px;
+        position: absolute;
+        z-index: 19 !important;
+        animation: loading-bar-spinner 400ms linear infinite;
+}
+
+#loading-bar-spinner.spinner .spinner-icon {
+        width: 40px;
+        height: 40px;
+        border: solid 4px transparent;
+        border-top-color: #00C8B1 !important;
+        border-left-color: #00C8B1 !important;
+        border-radius: 50%;
+}
+
+@keyframes loading-bar-spinner {
+        0% {
+                transform: rotate(0deg);
+                transform: rotate(0deg);
+        }
+
+        100% {
+                transform: rotate(360deg);
+                transform: rotate(360deg);
+        }
+}
+
+.justify-space-between {
+        justify-content: space-between;
 }
