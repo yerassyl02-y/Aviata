@@ -50,8 +50,6 @@ export default {};
         }
     }
 }
-.time {
-}
 .segments {
     margin-left: 27px;
     margin-right: 31px;

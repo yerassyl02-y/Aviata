@@ -14,8 +14,7 @@ export default {
     },
     methods: {
         async getData() {
-            const data = await this.$axios.get(`/flights`);
-            console.log(data.data);
+            this.data = (await this.$repositories.flights.flights()).data;
         },
     },
 };

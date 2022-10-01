@@ -21,7 +21,7 @@ export default {
             try {
                 this.loading = true;
                 this.airlines = Object.values(
-                    (await this.$axios.get(`/airlines/`)).data
+                    (await this.$repositories.airlines.airlines()).data
                 );
                 this.airlines.unshift("Все");
             } catch (e) {
