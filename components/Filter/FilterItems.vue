@@ -8,20 +8,23 @@ export default {
         items: {
             type: Array,
         },
-        margin: {
-            type: String,
-        },
         height: {
             type: String,
         },
-        items_margin: {
-            type: String,
+        is_scrollable: {
+            type: Boolean,
+        },
+        data() {
+            return {
+                airlines_array: [],
+            };
         },
     },
-    data() {
-        return {
-            show: false,
-        };
+    // inject: ["onToggleListFunc"],
+    methods: {
+        async setFilterList(item) {
+            this.$emit("setFilterList", item.code);
+        },
     },
 };
 </script>
@@ -29,22 +32,23 @@ export default {
 <template>
     <div
         class="filter-items d-flex flex-column bg-gray radius-4"
-        :style="{ marginBottom: `${margin}`, maxHeight: `${height}` }"
+        :class="{ scrollable: is_scrollable }"
     >
         <h3 class="filter-items__title">{{ title }}</h3>
 
-        <div
-            class="filter-items__block"
-            :style="{ marginTop: `${items_margin}` }"
-        >
+        <div class="filter-items__block">
             <div
                 class="d-flex align-center pointer py2"
-                v-for="title in items"
-                :key="title"
+                v-for="(title, idx) in items"
+                :key="idx"
             >
                 <label class="filter-items__option pointer">
-                    <input type="checkbox" class="filter-items__checkbox" />
-                    {{ title }}
+                    <input
+                        type="checkbox"
+                        class="filter-items__checkbox"
+                        @click="setFilterList(title)"
+                    />
+                    {{ title.title }}
                 </label>
             </div>
         </div>
@@ -72,6 +76,7 @@ export default {
 
     width: 100%;
     padding: 12px;
+    margin-bottom: 13px;
 
     label {
         display: flex;
@@ -79,6 +84,7 @@ export default {
     }
     &__block {
         overflow-y: scroll;
+        margin-top: 12px;
     }
 
     &__checkbox {
@@ -103,6 +109,9 @@ export default {
             fill: #7284e4;
         }
     }
+}
+.scrollable {
+    max-height: 320px;
 }
 .py2 {
     padding: 8px 0;

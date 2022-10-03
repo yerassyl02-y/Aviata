@@ -1,14 +1,22 @@
 <script>
-export default {};
+export default {
+    props: {
+        item: {
+            type: Object,
+        },
+    },
+};
 </script>
 
 <template>
     <div class="price bg-gray d-flex flex-column align-center w-full">
-        <h5 class="fw600">590 240 ₸</h5>
+        <h5 class="fw600">
+            {{ item.price }}{{ item.currency == "KZT" ? "₸" : item.currency }}
+        </h5>
         <button class="button button-green w-full">Выбрать</button>
-        <span class="fs12 passengers-price">Цена за всех пассажиров</span>
+        <span class="font-12 passengers-price">Цена за всех пассажиров</span>
         <div class="d-flex align-center w-full baggage">
-            <span class="fs12 fw400">Нет багажа</span>
+            <span class="font-12 fw400">Нет багажа</span>
             <button class="button button-blue w-full">+ Добавить багаж</button>
         </div>
     </div>

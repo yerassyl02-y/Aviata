@@ -2,33 +2,35 @@
 import FilterItems from "@/components/Filter/FilterItems.vue";
 export default {
     components: { FilterItems },
+    props: {
+        airlines: {
+            type: Array,
+        },
+    },
     data() {
         return {
             tariffOptions: [
-                "Только прямые",
-                "Только с багажом",
-                "Только возвратные",
+                {
+                    title: "Только прямые",
+                    has_meta: false,
+                },
+                {
+                    title: "Только c багажом",
+                    has_offers: false,
+                },
+                {
+                    title: "Только возвращаемые",
+                    refundable: false,
+                },
             ],
-            airlines: [],
+            is_scrollable: true,
             loading: false,
+            airlines_validating_code: [],
         };
     },
-    created() {
-        this.getAirlines();
-    },
     methods: {
-        async getAirlines() {
-            try {
-                this.loading = true;
-                this.airlines = Object.values(
-                    (await this.$repositories.airlines.airlines()).data
-                );
-                this.airlines.unshift("Все");
-            } catch (e) {
-                console.error(e);
-            } finally {
-                this.loading = false;
-            }
+        setFilterList(code) {
+            this.$emit("setFilterList", code);
         },
     },
 };
@@ -36,30 +38,16 @@ export default {
 
 <template>
     <div class="filter-list">
-        <filter-items
-            title="Опции тарифа"
-            :items="tariffOptions"
-            margin="12px"
-            items_margin="12px"
-        />
+        <filter-items title="Опции тарифа" :items="tariffOptions" />
         <filter-items
             title="Авиакомпании"
             :items="airlines"
-            margin="13px"
-            items_margin="16px"
-            height="320px"
+            :is_scrollable="is_scrollable"
+            @setFilterList="setFilterList"
         />
-        <p class="blue-text underline pointer fs12 mb-0">
+        <p class="blue-text underline pointer font-12 mb-0">
             Сбросить все фильтры
         </p>
-        <v-overlay :value="loading" z-index="999999">
-            <v-progress-circular
-                :size="70"
-                :width="7"
-                color="#202123"
-                indeterminate
-            ></v-progress-circular>
-        </v-overlay>
     </div>
 </template>
 

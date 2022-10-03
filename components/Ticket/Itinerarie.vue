@@ -1,34 +1,118 @@
 <script>
-export default {};
+import moment from "moment";
+export default {
+    props: {
+        item: {
+            type: Object,
+        },
+    },
+    data() {
+        return {
+            moment: moment,
+        };
+    },
+    methods: {
+        getStartDate(item) {
+            return [
+                this.moment(item.arr_date)
+                    .locale("ru")
+                    .format("ll")
+                    .split("")
+                    .splice(0, 6)
+                    .join(""),
+                this.moment(item.arr_date)
+                    .locale("ru")
+                    .format("llll")
+                    .split("")
+                    .splice(0, 2)
+                    .join(""),
+            ];
+        },
+        getEndDate(item) {
+            return [
+                this.moment(item.dep_date)
+                    .locale("ru")
+                    .format("ll")
+                    .split("")
+                    .splice(0, 6)
+                    .join(""),
+                this.moment(item.dep_date_date)
+                    .locale("ru")
+                    .format("llll")
+                    .split("")
+                    .splice(0, 2)
+                    .join(""),
+            ];
+        },
+    },
+};
 </script>
 
 <template>
     <div class="itinerarie d-flex align-center">
-        <div class="itinerarie__company d-flex align-center">
-            <svg width="20" height="20" class="itinerarie__logo">
-                <use href="@/assets/img/icons.svg#itinerarie-logo"></use>
-            </svg>
-            <h6 class="fw600">Air Astana</h6>
-        </div>
-        <div class="itinerarie__details d-flex align-center">
-            <div class="time d-flex flex-column">
-                <p class="fs12">25 ноя, вс</p>
-                <h4 class="fw600">23:25</h4>
-            </div>
-            <div class="segments d-flex flex-column">
-                <div class="d-flex align-center justify-space-between">
-                    <span>ALA</span>
-                    <p class="fs12">4 ч 20 м</p>
-                    <span>TSE</span>
+        <div v-for="(itinerary, index) in item.itineraries" :key="index">
+            <div
+                v-for="(itinerary_item, itinerary_index) in itinerary"
+                :key="itinerary_index"
+                class="itinerarie d-flex align-center"
+            >
+                <div class="itinerarie__company d-flex align-center">
+                    <img
+                        class="airline-image"
+                        :src="`https://aviata.kz/static/airline-logos/80x80/${item.validating_carrier}.png`"
+                    />
+                    <h6 class="fw600">{{ item.itinerarie.carrier_name }}</h6>
                 </div>
-                <img src="@/assets/img/Tickets/line.png" class="border" />
-                <p class="fs12 orange-text text-center">
-                    через Шымкент, 1 ч 50 м
-                </p>
-            </div>
-            <div class="time d-flex flex-column">
-                <p class="fs12">26 ноя, сб<span class="red-text">+1</span></p>
-                <h4 class="fw600">03:45</h4>
+                <div class="itinerarie__details d-flex align-center">
+                    <div class="time d-flex flex-column">
+                        <p class="font-12">
+                            {{ getStartDate(itinerary_item)[0] }},
+                            {{ getStartDate(itinerary_item)[1] }}
+                        </p>
+                        <h4 class="fw600">
+                            {{
+                                moment(itinerary_item.arr_date)
+                                    .locale("ru")
+                                    .format("LT")
+                            }}
+                        </h4>
+                    </div>
+                    <div class="segments d-flex flex-column">
+                        <div class="d-flex align-center justify-space-between">
+                            <span>{{
+                                itinerary_item.segments[0].origin_code
+                            }}</span>
+                            <p class="font-12">4 ч 20 м</p>
+                            <span>{{
+                                itinerary_item.segments[
+                                    itinerary_item.segments.length - 1
+                                ].origin_code
+                            }}</span>
+                        </div>
+                        <img
+                            src="@/assets/img/Tickets/line.png"
+                            class="border"
+                        />
+                        <p class="font-12 orange-text text-center">
+                            через Шымкент, 1 ч 50 м
+                        </p>
+                    </div>
+                    <div class="time d-flex flex-column">
+                        <p class="font-12">
+                            {{ getEndDate(itinerary_item)[0] }},{{
+                                getEndDate(itinerary_item)[1]
+                            }}
+                            <span class="red-text">+1</span>
+                        </p>
+                        <h4 class="fw600">
+                            {{
+                                moment(itinerary_item.dep_date)
+                                    .locale("ru")
+                                    .format("LT")
+                            }}
+                        </h4>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -40,6 +124,12 @@ export default {};
     margin-bottom: 46px;
     &__company {
         margin-right: 13px;
+        .airline-image {
+            max-width: 20px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
 
         h6 {
             margin-left: 7px;

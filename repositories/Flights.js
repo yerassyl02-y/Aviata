@@ -1,6 +1,6 @@
 export default ($axios) => ({
-        flights() {
-                return $axios.get(`/flights`)
+        flights(payload) {
+                return $axios.get(`/flights`, payload)
         },
 
 })

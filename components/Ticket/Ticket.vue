@@ -2,20 +2,20 @@
 import TicketInformation from "../Ticket/TicketInformation.vue";
 import Itinerarie from "./Itinerarie.vue";
 import PriceList from "./PriceList.vue";
+import moment from "moment";
 export default {
     components: { TicketInformation, Itinerarie, PriceList },
+    props: {
+        flights: {
+            type: Array,
+        },
+    },
     data() {
         return {
+            moment: moment,
             data: [],
+            carrier_name: "",
         };
-    },
-    created() {
-        this.getData();
-    },
-    methods: {
-        async getData() {
-            this.data = (await this.$repositories.flights.flights()).data;
-        },
     },
 };
 </script>
@@ -31,14 +31,14 @@ export default {
                 d-flex
                 justify-space-between
             "
-            v-for="item in 4"
-            :key="item"
+            v-for="item in flights"
+            :key="item.id"
         >
             <div class="d-flex flex-column ticket-details">
-                <itinerarie />
-                <ticket-information />
+                <itinerarie :item="item" />
+                <ticket-information :item="item" />
             </div>
-            <price-list />
+            <price-list :item="item" />
         </div>
     </div>
 </template>
