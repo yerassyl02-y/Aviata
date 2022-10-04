@@ -98,6 +98,7 @@ export default {
             this.validation_airlines_code = [];
             this.getFlights();
             this.getPaginationCount();
+            this.airlines.forEach((item) => (item.checkbox = false));
         },
         goPrev() {
             this.page--;

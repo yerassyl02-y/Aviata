@@ -1,10 +1,6 @@
 <script>
-import Information from "./Information.vue";
-import Itinerarie from "./Itinerarie.vue";
-import PriceList from "./PriceList.vue";
 import moment from "moment";
 export default {
-    components: { Information, Itinerarie, PriceList },
     props: {
         flights: {
             type: Array,
@@ -33,10 +29,10 @@ export default {
             :key="item.id"
         >
             <div class="d-flex flex-column ticket-details">
-                <itinerarie :item="item" />
-                <information :item="item" />
+                <TicketItinerarie :item="item" />
+                <TicketInformation :item="item" />
             </div>
-            <price-list :item="item" />
+            <TicketPriceList :item="item" />
         </div>
     </div>
 </template>

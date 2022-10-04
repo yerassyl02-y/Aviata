@@ -16,7 +16,9 @@ export default {
         <button class="button button-green w-full">Выбрать</button>
         <span class="font-12 passengers-price">Цена за всех пассажиров</span>
         <div class="d-flex align-center w-full baggage">
-            <span class="font-12 fw400">Нет багажа</span>
+            <span v-if="!item.has_offers" class="font-12 fw400"
+                >Нет багажа</span
+            >
             <button class="button button-blue w-full">+ Добавить багаж</button>
         </div>
     </div>

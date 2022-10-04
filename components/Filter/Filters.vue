@@ -1,7 +1,5 @@
 <script>
-import FilterItems from "@/components/Filter/FilterItems.vue";
 export default {
-    components: { FilterItems },
     props: {
         airlines: {
             type: Array,
@@ -39,12 +37,13 @@ export default {
 
 <template>
     <div class="filter-list">
-        <filter-items title="Опции тарифа" :items="tariff_options" />
-        <filter-items
+        <FilterItems title="Опции тарифа" :items="tariff_options" />
+        <FilterItems
             title="Авиакомпании"
             :items="airlines"
             :is_scrollable="is_scrollable"
             @setFilterList="setFilterList"
+            @resetAirlinesList="resetAirlinesList"
         />
         <button
             class="

@@ -25,6 +25,9 @@ export default {
         setFilterList(item) {
             this.$emit("setFilterList", item);
         },
+        clearFilter() {
+            this.$emit("resetAirlinesList");
+        },
         hoverOnItem(item) {
             console.log(item);
         },
@@ -54,7 +57,6 @@ export default {
                         :id="`checkbox` + item.title"
                         :checked="item.checkbox"
                         class="filter-items__checkbox"
-                        :class="{ hovered: item.checkbox }"
                         @change="setFilterList(item)"
                         @mouseover="hoverOnItem(item)"
                     />
@@ -69,6 +71,7 @@ export default {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             class="filter-items__close cursor-pointer"
+            @click="clearFilter"
         >
             <path
                 fill-rule="evenodd"
@@ -106,11 +109,6 @@ export default {
         accent-color: #55bb06;
         color: white;
         margin-right: 12px;
-    }
-    .hovered {
-        display: inline-block;
-        border: 2px solid #ebebeb !important;
-        accent-color: #ebebeb;
     }
     &__close {
         position: absolute;
