@@ -1,10 +1,10 @@
 <script>
-import TicketInformation from "../Ticket/TicketInformation.vue";
+import Information from "./Information.vue";
 import Itinerarie from "./Itinerarie.vue";
 import PriceList from "./PriceList.vue";
 import moment from "moment";
 export default {
-    components: { TicketInformation, Itinerarie, PriceList },
+    components: { Information, Itinerarie, PriceList },
     props: {
         flights: {
             type: Array,
@@ -13,8 +13,6 @@ export default {
     data() {
         return {
             moment: moment,
-            data: [],
-            carrier_name: "",
         };
     },
 };
@@ -36,7 +34,7 @@ export default {
         >
             <div class="d-flex flex-column ticket-details">
                 <itinerarie :item="item" />
-                <ticket-information :item="item" />
+                <information :item="item" />
             </div>
             <price-list :item="item" />
         </div>
@@ -48,16 +46,16 @@ export default {
 .main-container {
     max-width: 880px;
     width: 100%;
+    margin-left: 20px;
 }
 .main-ticket {
     height: fit-content;
-    margin-left: 20px;
     padding-left: 12px;
 
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 
     margin-bottom: 12px;
-    width: 100%;
+    // width: 100%;
 
     &:last-of-type {
         margin-bottom: 0;
@@ -68,6 +66,11 @@ export default {
         width: 100%;
         padding-top: 28px;
         padding-bottom: 16px;
+    }
+}
+@media screen and (max-width: 990px) {
+    .main-container {
+        margin-left: 0;
     }
 }
 </style>

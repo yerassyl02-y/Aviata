@@ -12,7 +12,7 @@ export default {
         };
     },
     methods: {
-        getStartDate(item) {
+        getEndDate(item) {
             return [
                 this.moment(item.arr_date)
                     .locale("ru")
@@ -28,7 +28,7 @@ export default {
                     .join(""),
             ];
         },
-        getEndDate(item) {
+        getStartDate(item) {
             return [
                 this.moment(item.dep_date)
                     .locale("ru")
@@ -43,6 +43,9 @@ export default {
                     .splice(0, 2)
                     .join(""),
             ];
+        },
+        getTravelTime(item) {
+            return (item.traveltime / 3600).toFixed(2);
         },
     },
 };
@@ -71,7 +74,7 @@ export default {
                         </p>
                         <h4 class="fw600">
                             {{
-                                moment(itinerary_item.arr_date)
+                                moment(itinerary_item.dep_date)
                                     .locale("ru")
                                     .format("LT")
                             }}
@@ -82,7 +85,10 @@ export default {
                             <span>{{
                                 itinerary_item.segments[0].origin_code
                             }}</span>
-                            <p class="font-12">4 ч 20 м</p>
+                            <p class="font-12">
+                                {{ getTravelTime(itinerary_item) }}
+                                м
+                            </p>
                             <span>{{
                                 itinerary_item.segments[
                                     itinerary_item.segments.length - 1
@@ -106,7 +112,7 @@ export default {
                         </p>
                         <h4 class="fw600">
                             {{
-                                moment(itinerary_item.dep_date)
+                                moment(itinerary_item.arr_date)
                                     .locale("ru")
                                     .format("LT")
                             }}

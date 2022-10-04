@@ -1,3 +1,4 @@
+//repository.js для хранения запросов в одном месте, деление по модулям для удобства
 import Airlines from "./Airlines";
 import Flights from "./Flights";
 

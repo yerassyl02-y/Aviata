@@ -1,12 +1,16 @@
 <script>
-export default {};
+export default {
+    props: {
+        item: Object,
+    },
+};
 </script>
 
 <template>
     <div class="ticket-info d-flex align-center">
-        <p class="font-12 blue-text pointer">Детали перелета</p>
-        <p class="font-12 blue-text ml-6 mr-9 pointer">Условия тарифа</p>
-        <div class="d-flex align-center">
+        <p class="font-12 blue-text cursor-pointer">Детали перелета</p>
+        <p class="font-12 blue-text ml-6 mr-9 cursor-pointer">Условия тарифа</p>
+        <div v-if="!item.refundable" class="d-flex align-center">
             <svg width="20" height="20">
                 <use href="@/assets/img/icons.svg#non-refundeble"></use>
             </svg>

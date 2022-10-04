@@ -1,8 +1,5 @@
 <script>
-import Filters from "../components/Filter/Filters.vue";
-import Ticket from "../components/Ticket/Ticket.vue";
 export default {
-    components: { Filters, Ticket },
     data() {
         return {
             flights: [],
@@ -14,10 +11,10 @@ export default {
             validation_airlines_code: [],
         };
     },
-    created() {
-        this.getFlights();
-        this.getAirlines();
-        this.getPaginationCount();
+    async created() {
+        await this.getFlights();
+        await this.getAirlines();
+        await this.getCountOfFlights();
     },
     // provide() {      //tried to use provide/inject, but it didn't work properly ;(
     //     return {
@@ -25,19 +22,31 @@ export default {
     //     };
     // },
     methods: {
+        async getCountOfFlights() {
+            try {
+                this.count =
+                    (await this.$repositories.flights.flights()).data.length /
+                    this.flights.length;
+            } catch (e) {
+                console.error(e);
+            }
+        },
         async getFlights() {
             try {
+                console.log(this.validation_airlines_code);
                 this.loading = true;
                 let params = {
+                    validating_carrier: this.validation_airlines_code,
                     _page: this.page,
                     _limit: this.limit,
                 };
-                this.flights = (
+                let flights = (
                     await this.$repositories.flights.flights({ params })
                 ).data;
-                this.flights.forEach((item) => {
+                flights.forEach((item) => {
                     item.itinerarie = item.itineraries[0][0];
                 });
+                this.flights = flights;
                 console.log(this.flights);
             } catch (e) {
                 console.error(e);
@@ -53,6 +62,7 @@ export default {
                 ).map((item) => ({
                     code: item[0],
                     title: item[1],
+                    checkbox: false,
                 }));
             } catch (e) {
                 console.error(e);
@@ -61,17 +71,33 @@ export default {
             }
         },
         async getPaginationCount() {
-            this.count =
-                (await this.$repositories.flights.flights()).data.length /
-                this.limit;
+            let params = {
+                validating_carrier: this.validation_airlines_code,
+            };
+            this.count = Math.ceil(
+                (await this.$repositories.flights.flights({ params })).data
+                    .length / this.limit
+            );
+            console.log(this.count);
         },
-        setFilterList(code) {
-            if (this.validation_airlines_code.some((el) => el === code)) {
-                // this.validation_airlines_code.filter((e) => );
+        setFilterList(item) {
+            item.checkbox = !item.checkbox;
+            if (item.checkbox) {
+                if (!this.validation_airlines_code.includes(item.code))
+                    this.validation_airlines_code.push(item.code);
             } else {
-                this.validation_airlines_code.push(code);
+                this.validation_airlines_code =
+                    this.validation_airlines_code.filter(
+                        (code) => code != item.code
+                    );
             }
-            console.log(this.validation_airlines_code);
+            this.getFlights();
+            this.getPaginationCount();
+        },
+        resetAirlinesList() {
+            this.validation_airlines_code = [];
+            this.getFlights();
+            this.getPaginationCount();
         },
         goPrev() {
             this.page--;
@@ -96,9 +122,13 @@ export default {
 
 <template>
     <div class="tickets">
-        <div class="d-flex">
-            <filters :airlines="airlines" @setFilterList="setFilterList" />
-            <ticket :flights="flights" />
+        <div class="d-flex tickets__container">
+            <FilterFilters
+                :airlines="airlines"
+                @setFilterList="setFilterList"
+                @resetAirlinesList="resetAirlinesList"
+            />
+            <Ticket :flights="flights" />
         </div>
         <div>
             <svg width="22" height="22" @click="goPrev">
@@ -108,7 +138,7 @@ export default {
                 color="#359866"
                 @input="getFlights"
                 v-model="page"
-                :total-visible="7"
+                :total-visible="5"
                 class="pagination"
                 :length="count"
             ></v-pagination>
@@ -137,5 +167,12 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 0 16px;
+}
+@media screen and (max-width: 990px) {
+    .tickets {
+        &__container {
+            flex-direction: column;
+        }
+    }
 }
 </style>

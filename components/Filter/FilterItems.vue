@@ -22,9 +22,11 @@ export default {
     },
     // inject: ["onToggleListFunc"],
     methods: {
-        async setFilterList(item) {
-            this.$emit("setFilterList", item.code);
+        setFilterList(item) {
+            this.$emit("setFilterList", item);
         },
+        hoverOnItem(item) {},
+        hoverOut(item) {},
     },
 };
 </script>
@@ -38,17 +40,24 @@ export default {
 
         <div class="filter-items__block">
             <div
-                class="d-flex align-center pointer py2"
-                v-for="(title, idx) in items"
+                class="d-flex align-center cursor-pointer py2"
+                v-for="(item, idx) in items"
                 :key="idx"
             >
-                <label class="filter-items__option pointer">
+                <label
+                    class="filter-items__option cursor-pointer"
+                    :for="`checkbox` + item.title"
+                >
                     <input
                         type="checkbox"
+                        :id="`checkbox` + item.title"
+                        :checked="item.checkbox"
                         class="filter-items__checkbox"
-                        @click="setFilterList(title)"
+                        :class="{ hovered: item.checkbox }"
+                        @change="setFilterList(item)"
+                        @mouseover="hoverOnItem(item)"
                     />
-                    {{ title.title }}
+                    {{ item.title }}
                 </label>
             </div>
         </div>
@@ -58,7 +67,7 @@ export default {
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            class="filter-items__close pointer"
+            class="filter-items__close cursor-pointer"
         >
             <path
                 fill-rule="evenodd"
@@ -97,7 +106,11 @@ export default {
         color: white;
         margin-right: 12px;
     }
-
+    .hovered {
+        display: inline-block;
+        border: 2px solid #ebebeb !important;
+        accent-color: #ebebeb;
+    }
     &__close {
         position: absolute;
         top: 12px;

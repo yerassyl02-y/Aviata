@@ -9,7 +9,7 @@ export default {
     },
     data() {
         return {
-            tariffOptions: [
+            tariff_options: [
                 {
                     title: "Только прямые",
                     has_meta: false,
@@ -24,13 +24,14 @@ export default {
                 },
             ],
             is_scrollable: true,
-            loading: false,
-            airlines_validating_code: [],
         };
     },
     methods: {
-        setFilterList(code) {
-            this.$emit("setFilterList", code);
+        setFilterList(item) {
+            this.$emit("setFilterList", item);
+        },
+        resetAirlinesList() {
+            this.$emit("resetAirlinesList");
         },
     },
 };
@@ -38,16 +39,27 @@ export default {
 
 <template>
     <div class="filter-list">
-        <filter-items title="Опции тарифа" :items="tariffOptions" />
+        <filter-items title="Опции тарифа" :items="tariff_options" />
         <filter-items
             title="Авиакомпании"
             :items="airlines"
             :is_scrollable="is_scrollable"
             @setFilterList="setFilterList"
         />
-        <p class="blue-text underline pointer font-12 mb-0">
+        <button
+            class="
+                blue-button blue-text
+                cursor-pointer
+                font-12
+                d-flex
+                align-center
+                justify-center
+                mb-0
+            "
+            @click="resetAirlinesList"
+        >
             Сбросить все фильтры
-        </p>
+        </button>
     </div>
 </template>
 
@@ -56,5 +68,19 @@ export default {
 .filter-list {
     max-width: 240px;
     width: 100%;
+
+    .blue-button {
+        font-family: "OpenSans-Regular";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        border-bottom: 1px dashed rgba(114, 132, 228, 0.5);
+    }
+}
+@media screen and (max-width: 990px) {
+    .filter-list {
+        margin-bottom: 20px;
+    }
 }
 </style>
