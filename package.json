@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "concurrently \"npm run json\" \"nuxt\"",
     "build": "nuxt build",
+    "json": "npx json-server -w db.json -p 3003",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/moment": "^1.6.1",
+    "concurrently": "^7.4.0",
     "core-js": "^3.19.3",
     "json-server": "^0.17.0",
     "nuxt": "^2.15.8",

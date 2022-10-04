@@ -25,8 +25,9 @@ export default {
         setFilterList(item) {
             this.$emit("setFilterList", item);
         },
-        hoverOnItem(item) {},
-        hoverOut(item) {},
+        hoverOnItem(item) {
+            console.log(item);
+        },
     },
 };
 </script>
