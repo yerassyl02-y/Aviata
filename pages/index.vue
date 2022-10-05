@@ -33,7 +33,6 @@ export default {
         },
         async getFlights() {
             try {
-                console.log(this.validation_airlines_code);
                 this.loading = true;
                 let params = {
                     validating_carrier: this.validation_airlines_code,
@@ -47,7 +46,6 @@ export default {
                     item.itinerarie = item.itineraries[0][0];
                 });
                 this.flights = flights;
-                console.log(this.flights);
             } catch (e) {
                 console.error(e);
             } finally {
@@ -91,6 +89,7 @@ export default {
                         (code) => code != item.code
                     );
             }
+            this.page = 1;
             this.getFlights();
             this.getPaginationCount();
         },
