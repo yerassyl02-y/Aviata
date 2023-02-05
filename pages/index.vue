@@ -69,6 +69,7 @@ export default {
             }
         },
         async getPaginationCount() {
+          console.log(123)
             let params = {
                 validating_carrier: this.validation_airlines_code,
             };
