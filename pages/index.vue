@@ -6,7 +6,7 @@ export default {
             loading: false,
             page: 1,
             limit: 10,
-            count: null,
+            count: 0,
             airlines: [],
             validation_airlines_code: [],
         };
