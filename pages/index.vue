@@ -4,7 +4,7 @@ export default {
         return {
             flights: [],
             loading: false,
-            page: 1,
+            page: 2,
             limit: 10,
             count: null,
             airlines: [],
