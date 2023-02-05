@@ -4,9 +4,9 @@ export default {
         return {
             flights: [],
             loading: false,
-            page: 2,
-            limit: 20,
-            count: null,
+            page: 1,
+            limit: 10,
+            count: 0,
             airlines: [],
             validation_airlines_code: [],
         };
